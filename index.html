@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="./style.css">
+   <link href="https://fonts.googleapis.com/css?family=Roboto:regular,500,700,900&display=swap" rel="stylesheet" />
+   <title>Senla ToDoList</title>
+</head>
+
+<body>
+   <div class="wrapper">
+      <header class="header">
+         <div class="header__container">
+            <div class="header__logo">
+               <a href="#"><img src="./img/icons/logo.svg" alt="Senla Logo"></a>
+            </div>
+            <form action="submit" class="header__search search" id="formSearch">
+               <button class="search__button"><img src="./img/icons/search.svg" alt=""></button>
+               <input class="search__input" type="text" placeholder="Search task for to do" required>
+            </form>
+         </div>
+      </header>
+      <main class="main">
+         <div class="main__container">
+            <div class="main__content">
+               <nav class="menu__list list">
+                  <ul class="list__status">
+                     <li class="list__item active__link"><a href="#" class="list__link">All</a></li>
+                     <li class="list__item"><a href="#" class="list__link">Active</a></li>
+                     <li class="list__item"><a href="#" class="list__link">Done</a></li>
+                  </ul>
+               </nav>
+               <form action="submit" class="form__task" id="formTask">
+                  <p class="form__title">New Task</p>
+                  <textarea class="form__textarea" id="formTextarea" required></textarea>
+                  <button class="form__button" type="submit">Add</button>
+               </form>
+               <ul class="list__task">
+                  <li class="task__item">
+                     <img class="task__marked-icon hidden" src="./img/icons/star.svg" alt="mark-star icon">
+                     <span class="task__text">Новая задача</span>
+                     <button class="task__unmarked hidden none" data-action="unmarked" href="#">Not important</button>
+                     <button class="task__marked hidden" data-action="marked" href="#">Mark important</button>
+                     <button class="task__delete" data-action="delete" href="#"><img src="./img/icons/delete.svg"
+                           alt="Delete icon"></button>
+                  </li>
+               </ul>
+            </div>
+            <div class="main__image">
+               <img src="./img/fone-picture.svg" alt="Man with lists img">
+            </div>
+         </div>
+      </main>
+   </div>
+   <script src="./script.js"></script>
+</body>
+
+</html>
