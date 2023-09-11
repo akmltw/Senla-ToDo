@@ -2,8 +2,6 @@ const taskForm = document.querySelector('#formTask');
 const taskTextArea = document.querySelector('#formTextarea');
 const taskList = document.querySelector('.list__task');
 const taskMark = document.querySelector('.task__mark');
-// const buttonMarked = document.querySelector('.task__marked');
-// const buttonUnmarked = document.querySelector('.task__unmarked');
 const listStatus = document.querySelector('.list__status');
 const listStatusItem = document.querySelector('.list__item');
 const searchForm = document.querySelector('.header__search');
@@ -42,8 +40,14 @@ function filterStatus(event) {
    if (!event.target.closest('.list__item')) return;
    const listStatusItemAll = listStatus.querySelectorAll('.list__item');
    const parentNode = event.target.closest('.list__item');
-   listStatusItemAll.forEach(item => item.classList.remove('active__link'));
-   parentNode.classList.add('active__link');
+   listStatusItemAll.forEach(item => item.classList.remove('list__item_active'));
+   parentNode.classList.add('list__item_active');
+   /*
+   tasks.forEach(task => {
+      if (task.done)
+         renderFilterTask(task)
+   });
+   */
 };
 function addTask(event) {
    event.preventDefault();
@@ -80,6 +84,7 @@ function doneTask(event) {
    saveToLocalStorage();
    textTask.classList.toggle('task__text--done');
    parentNode.querySelector('.task__marked-icon').classList.toggle('task__text--done');
+   console.log(event);
 };
 function toggleMarked(event) {
    if (event.target.dataset.action !== 'marked' && event.target.dataset.action !== 'unmarked') return;
@@ -94,26 +99,26 @@ function toggleMarked(event) {
    buttonUnmarked.classList.toggle('none');
    parentNode.querySelector('.task__marked-icon').classList.toggle('hidden');
 };
-function showMarked(event) {
-   if (!event.target.closest('.task__item')) return;
-   const parentNode = event.target.closest('.task__item');
-   const buttonMarked = parentNode.querySelector('.task__marked');
-   const buttonUnmarked = parentNode.querySelector('.task__unmarked');
-   buttonMarked.classList.toggle('hidden');
-   buttonUnmarked.classList.toggle('hidden');
-};
-function hideMark(event) {
-   if (!event.target.closest('.task__item')) return;
-   const parentNode = event.target.closest('.task__item');
-   const buttonMarked = parentNode.querySelector('.task__marked');
-   const buttonUnmarked = parentNode.querySelector('.task__unmarked');
-   buttonMarked.classList.toggle('hidden');
-   buttonUnmarked.classList.toggle('hidden');
-};
 function saveToLocalStorage() {
    localStorage.setItem('tasks', JSON.stringify(tasks));
 };
+//TODO: Сделать рефакторинг $cssClassVisibilityMarked и $cssClassVisibilityUnmarked
 function renderTask(task) {
+   const cssClassStatus = task.done ? "task__text task__text--done" : "task__text";
+   const cssClassImportant = task.important ? "task__marked-icon" : "task__marked-icon hidden";
+   const cssClassVisibilityMarked = task.important ? "task__marked none" : "task__marked";
+   const cssClassVisibilityUnmarked = task.important ? "task__unmarked" : "task__unmarked none";
+   let taskHTML = `<li id="${task.id}" class="task__item">
+                     <img class="${cssClassImportant}" src="./img/icons/star.svg" alt="mark-star icon">
+                     <span class="${cssClassStatus}">${task.text}</span>
+                     <button class="${cssClassVisibilityUnmarked}" data-action="unmarked" href="#">Not important</button>
+                     <button class="${cssClassVisibilityMarked}" data-action="marked" href="#">Mark important</button>
+                     <button class="task__delete" data-action="delete" href="#"><img src="./img/icons/delete.svg" alt="Delete icon"></button>
+                  </li>`;
+   taskList.insertAdjacentHTML('beforeend', taskHTML);
+};
+/*
+function renderFilterTask(task) {
    const cssClassStatus = task.done ? "task__text task__text--done" : "task__text";
    const cssClassImportant = task.important ? "task__marked-icon" : "task__marked-icon hidden";
    let taskHTML = `<li id="${task.id}" class="task__item">
@@ -124,4 +129,5 @@ function renderTask(task) {
                      <button class="task__delete" data-action="delete" href="#"><img src="./img/icons/delete.svg" alt="Delete icon"></button>
                   </li>`;
    taskList.insertAdjacentHTML('beforeend', taskHTML);
-};
+}
+*/

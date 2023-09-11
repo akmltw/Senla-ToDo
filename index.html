@@ -12,36 +12,31 @@
 <body>
    <div class="wrapper">
       <header class="header">
-         <div class="header__container">
-            <div class="header__logo">
-               <a href="#"><img src="./img/icons/logo.svg" alt="Senla Logo"></a>
-            </div>
-            <form action="submit" class="header__search search" id="formSearch">
-               <button class="search__button"><img src="./img/icons/search.svg" alt=""></button>
-               <input class="search__input" type="text" placeholder="Search task for to do" required>
+         <div class="header__container _container">
+            <!-- <div class="header__logo"> -->
+            <a class="header__logo" href="#"><img src="./img/icons/logo.svg" alt="Senla Logo"></a>
+            <!-- </div> -->
+            <form action="submit" class="header__search" id="formSearch">
+               <input class="header__input" type="text" placeholder="Search task for to do" required>
             </form>
          </div>
       </header>
-      <main class="main">
-         <div class="main__container">
-            <div class="main__content">
-               <nav class="menu__list list">
-                  <ul class="list__status">
-                     <li class="list__item active__link"><a href="#" class="list__link">All</a></li>
-                     <li class="list__item"><a href="#" class="list__link">Active</a></li>
-                     <li class="list__item"><a href="#" class="list__link">Done</a></li>
-                  </ul>
-               </nav>
-               <form action="submit" class="form__task" id="formTask">
-                  <p class="form__title">New Task</p>
-                  <textarea class="form__textarea" id="formTextarea" required></textarea>
-                  <button class="form__button" type="submit">Add</button>
-               </form>
-               <ul class="list__task"></ul>
-            </div>
-            <div class="main__image">
-               <img src="./img/fone-picture.svg" alt="Man with lists img">
-            </div>
+      <main class="page">
+         <div class="page__container _container">
+            <nav class="menu__list list">
+               <ul class="list__status">
+                  <li class="list__item list__item_active"><a href="#" class="list__link">All</a></li>
+                  <li class="list__item"><a href="#" class="list__link">Active</a></li>
+                  <li class="list__item"><a href="#" class="list__link">Done</a></li>
+               </ul>
+            </nav>
+            <form action="submit" class="form__task" id="formTask">
+               <p class="form__title">New Task</p>
+               <textarea class="form__textarea" id="formTextarea" required></textarea>
+               <button class="form__button" type="submit">Add</button>
+            </form>
+            <ul class="list__task">
+            </ul>
          </div>
       </main>
    </div>
