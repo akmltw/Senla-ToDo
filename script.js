@@ -4,9 +4,7 @@ const taskList = document.querySelector('.list__task');
 const taskMark = document.querySelector('.task__mark');
 const listStatus = document.querySelector('.list__status');
 const listStatusItem = document.querySelector('.list__item');
-const searchForm = document.querySelector('.header__search');
-const searchInput = document.querySelector('.search__input');
-const searchButton = document.querySelector('.search__button');
+const searchInput = document.querySelector('.header__input');
 
 let tasks = [];
 
@@ -15,7 +13,7 @@ if (localStorage.getItem('tasks')) {
    tasks.forEach(task => renderTask(task));
 };
 
-searchForm.addEventListener('submit', searchTask);
+searchInput.addEventListener('input', searchTask);
 listStatus.addEventListener('click', filterStatus);
 taskForm.addEventListener('submit', addTask);
 taskList.addEventListener('click', deleteTask);
@@ -23,16 +21,16 @@ taskList.addEventListener('click', doneTask);
 taskList.addEventListener('click', toggleMarked);
 
 function searchTask(event) {
-   if (!event.target.closest('.header__search')) return;
-   event.preventDefault();
-   const searchText = searchInput.value;
-   /*
-   const foundTask = taskList.forEach(task => { if (searchText === taskText) taskText.classList.add('found__task') });
-   taskList.innerHTML = "";
-   taskList.insertAdjacentHTML('beforeend', foundTask);
-   */
-   searchInput.value = "";
-   searchInput.focus();
+   if (!event.target.closest('.header__input')) return;
+   const searchText = event.target.value.toLowerCase();
+   const taskItems = taskList.querySelectorAll('li');
+   taskItems.forEach(item => {
+      const taskText = item.querySelector('span').textContent.toLowerCase();
+      if (!taskText.includes(searchText))
+         item.classList.add('none');
+      else
+         item.classList.remove('none');
+   });
 }
 //TODO: Что лучше: switch или if?
 function filterStatus(event) {
