@@ -9,9 +9,9 @@ const searchInput = document.querySelector('.header__input');
 let tasks = [];
 
 if (localStorage.getItem('tasks')) {
-   tasks = JSON.parse(localStorage.getItem('tasks'))
+   tasks = JSON.parse(localStorage.getItem('tasks'));
    tasks.forEach(task => renderTask(task));
-};
+}
 
 searchInput.addEventListener('input', searchTask);
 listStatus.addEventListener('click', filterStatus);
@@ -26,10 +26,7 @@ function searchTask(event) {
    const taskItems = taskList.querySelectorAll('li');
    taskItems.forEach(item => {
       const taskText = item.querySelector('span').textContent.toLowerCase();
-      if (!taskText.includes(searchText))
-         item.classList.add('none');
-      else
-         item.classList.remove('none');
+      taskText.includes(searchText) ? item.classList.remove('none') : item.classList.add('none');
    });
 }
 //TODO: Что лучше: switch или if?
@@ -57,7 +54,7 @@ function filterStatus(event) {
 //TODO: Сделай рефакторинг renderAllTasks(), renderActiveTasks(), и renderDoneTasks() 
 function renderAllTasks() {
    if (localStorage.getItem('tasks')) {
-      tasks = JSON.parse(localStorage.getItem('tasks'))
+      tasks = JSON.parse(localStorage.getItem('tasks'));
       taskList.innerHTML = "";
       taskForm.classList.remove('none');
       tasks.forEach(task => renderTask(task));
