@@ -21,8 +21,6 @@ taskForm.addEventListener('submit', addTask);
 taskList.addEventListener('click', deleteTask);
 taskList.addEventListener('click', doneTask);
 taskList.addEventListener('click', toggleMarked);
-taskList.addEventListener('mouseover', showMarked);
-taskList.addEventListener('mouseout', hideMark);
 
 function searchTask(event) {
    if (!event.target.closest('.header__search')) return;
@@ -35,20 +33,45 @@ function searchTask(event) {
    */
    searchInput.value = "";
    searchInput.focus();
-};
+}
 function filterStatus(event) {
    if (!event.target.closest('.list__item')) return;
    const listStatusItemAll = listStatus.querySelectorAll('.list__item');
    const parentNode = event.target.closest('.list__item');
    listStatusItemAll.forEach(item => item.classList.remove('list__item_active'));
    parentNode.classList.add('list__item_active');
-   /*
-   tasks.forEach(task => {
-      if (task.done)
-         renderFilterTask(task)
-   });
-   */
-};
+   if (event.target.dataset.filter === 'all')
+      renderAllTasks();
+   if (event.target.dataset.filter === 'active')
+      renderActiveTasks();
+   if (event.target.dataset.filter === 'done')
+      renderDoneTasks();
+}
+//TODO: Сделай рефакторинг renderAllTasks(), renderActiveTasks(), и renderDoneTasks() 
+function renderAllTasks() {
+   if (localStorage.getItem('tasks')) {
+      tasks = JSON.parse(localStorage.getItem('tasks'))
+      taskList.innerHTML = "";
+      taskForm.classList.remove('none');
+      tasks.forEach(task => renderTask(task));
+   }
+}
+function renderActiveTasks() {
+   if (localStorage.getItem('tasks')) {
+      tasks = JSON.parse(localStorage.getItem('tasks'));
+      taskList.innerHTML = "";
+      taskForm.classList.remove('none');
+      tasks.filter(item => !item.done).forEach(task => renderTask(task));
+   }
+}
+function renderDoneTasks() {
+   if (localStorage.getItem('tasks')) {
+      tasks = JSON.parse(localStorage.getItem('tasks'));
+      taskList.innerHTML = "";
+      taskForm.classList.add('none');
+      tasks.filter(item => item.done).forEach(task => renderTask(task));
+   }
+}
 function addTask(event) {
    event.preventDefault();
    let taskText = taskTextArea.value;
@@ -65,7 +88,7 @@ function addTask(event) {
 
    taskTextArea.value = "";
    taskTextArea.focus();
-};
+}
 function deleteTask(event) {
    if (event.target.dataset.action !== 'delete') return;
    const parentNode = event.target.closest('.task__item');
@@ -73,7 +96,7 @@ function deleteTask(event) {
    tasks = tasks.filter(task => task.id !== idParentNode);
    saveToLocalStorage();
    parentNode.remove();
-};
+}
 function doneTask(event) {
    if (!event.target.matches('.task__item')) return;
    const parentNode = event.target.closest('.task__item');
@@ -85,7 +108,7 @@ function doneTask(event) {
    textTask.classList.toggle('task__text--done');
    parentNode.querySelector('.task__marked-icon').classList.toggle('task__text--done');
    console.log(event);
-};
+}
 function toggleMarked(event) {
    if (event.target.dataset.action !== 'marked' && event.target.dataset.action !== 'unmarked') return;
    const parentNode = event.target.closest('.task__item');
@@ -98,36 +121,23 @@ function toggleMarked(event) {
    buttonMarked.classList.toggle('none');
    buttonUnmarked.classList.toggle('none');
    parentNode.querySelector('.task__marked-icon').classList.toggle('hidden');
-};
+}
 function saveToLocalStorage() {
    localStorage.setItem('tasks', JSON.stringify(tasks));
-};
+}
 //TODO: Сделать рефакторинг $cssClassVisibilityMarked и $cssClassVisibilityUnmarked
 function renderTask(task) {
-   const cssClassStatus = task.done ? "task__text task__text--done" : "task__text";
+   const cssClassDoneStatus = task.done ? "task__text task__text--done" : "task__text";
+   const cssClassDoneStatusImg = task.done ? "task__text--done" : "";
    const cssClassImportant = task.important ? "task__marked-icon" : "task__marked-icon hidden";
    const cssClassVisibilityMarked = task.important ? "task__marked none" : "task__marked";
    const cssClassVisibilityUnmarked = task.important ? "task__unmarked" : "task__unmarked none";
    let taskHTML = `<li id="${task.id}" class="task__item">
-                     <img class="${cssClassImportant}" src="./img/icons/star.svg" alt="mark-star icon">
-                     <span class="${cssClassStatus}">${task.text}</span>
+                     <img class="${cssClassImportant} ${cssClassDoneStatusImg}" src="./img/icons/star.svg" alt="mark-star icon">
+                     <span class="${cssClassDoneStatus}">${task.text}</span>
                      <button class="${cssClassVisibilityUnmarked}" data-action="unmarked" href="#">Not important</button>
                      <button class="${cssClassVisibilityMarked}" data-action="marked" href="#">Mark important</button>
                      <button class="task__delete" data-action="delete" href="#"><img src="./img/icons/delete.svg" alt="Delete icon"></button>
                   </li>`;
    taskList.insertAdjacentHTML('beforeend', taskHTML);
-};
-/*
-function renderFilterTask(task) {
-   const cssClassStatus = task.done ? "task__text task__text--done" : "task__text";
-   const cssClassImportant = task.important ? "task__marked-icon" : "task__marked-icon hidden";
-   let taskHTML = `<li id="${task.id}" class="task__item">
-                     <img class="${cssClassImportant}" src="./img/icons/star.svg" alt="mark-star icon">
-                     <span class="${cssClassStatus}">${task.text}</span>
-                     <button class="task__unmarked hidden none" data-action="unmarked" href="#">Not important</button>
-                     <button class="task__marked hidden" data-action="marked" href="#">Mark important</button>
-                     <button class="task__delete" data-action="delete" href="#"><img src="./img/icons/delete.svg" alt="Delete icon"></button>
-                  </li>`;
-   taskList.insertAdjacentHTML('beforeend', taskHTML);
 }
-*/
