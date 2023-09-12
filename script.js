@@ -34,18 +34,27 @@ function searchTask(event) {
    searchInput.value = "";
    searchInput.focus();
 }
+//TODO: Что лучше: switch или if?
 function filterStatus(event) {
    if (!event.target.closest('.list__item')) return;
    const listStatusItemAll = listStatus.querySelectorAll('.list__item');
    const parentNode = event.target.closest('.list__item');
    listStatusItemAll.forEach(item => item.classList.remove('list__item_active'));
    parentNode.classList.add('list__item_active');
-   if (event.target.dataset.filter === 'all')
-      renderAllTasks();
-   if (event.target.dataset.filter === 'active')
-      renderActiveTasks();
-   if (event.target.dataset.filter === 'done')
-      renderDoneTasks();
+   switch (event.target.dataset.filter) {
+      case 'all':
+         taskList.innerHTML = "";
+         renderAllTasks();
+         break;
+      case 'active':
+         taskList.innerHTML = "";
+         renderActiveTasks();
+         break;
+      case 'done':
+         taskList.innerHTML = "";
+         renderDoneTasks();
+         break;
+   }
 }
 //TODO: Сделай рефакторинг renderAllTasks(), renderActiveTasks(), и renderDoneTasks() 
 function renderAllTasks() {
