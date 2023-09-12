@@ -118,6 +118,7 @@ body {
 a.list__link{
    color: inherit;
    opacity: 0.3;
+   pointer-events: none;
 }
 .list__item_active>.list__link{
    transition: all 0.3s ease 0s;
