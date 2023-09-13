@@ -168,6 +168,7 @@ a.list__link{
 
 /*-------------------------------------------------------------------------*/
 /*-----------------------------List-Tasks----------------------------------*/
+/* TODO: поправить padding */
 .task__item {
    display: flex;
    align-items: baseline;
@@ -281,6 +282,23 @@ span.task__text {
 .task__delete:hover {
    background-color: #bfbcbc;
 }
+
+/* TODO: поправить padding */
+.empty-list__item {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 763px;
+   height: 150px;
+   padding: 11px 12px 13px 23px;
+   font-size: 18px;
+   font-weight: 500;
+   background-color: rgba(231, 231, 231, 0.845);
+   color: inherit;
+   border-radius: 4px;
+   box-shadow: 0px 3px 10px 0px rgba(98, 100, 103, 0.211);
+}
+
 /*-------------------------------------------------------------------------*/
 .none {
    display: none;
@@ -288,7 +306,3 @@ span.task__text {
 .hidden{
    visibility: hidden;
 }
-/* .found__task {
-   background-color: orange;
-   color: white;
-} */
