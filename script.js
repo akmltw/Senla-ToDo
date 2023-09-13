@@ -11,6 +11,7 @@ let tasks = [];
 if (localStorage.getItem('tasks')) {
    tasks = JSON.parse(localStorage.getItem('tasks'));
    tasks.forEach(task => renderTask(task));
+   checkEmptyList();
 }
 
 searchInput.addEventListener('input', searchTask);
@@ -20,6 +21,7 @@ taskList.addEventListener('click', deleteTask);
 taskList.addEventListener('click', doneTask);
 taskList.addEventListener('click', toggleMarked);
 
+//TODO: Сделай удаление задач, а не classList.add('none')!
 function searchTask(event) {
    if (!event.target.closest('.header__input')) return;
    const searchText = event.target.value.toLowerCase();
@@ -52,6 +54,7 @@ function filterStatus(event) {
    }
 }
 //TODO: Сделай рефакторинг renderAllTasks(), renderActiveTasks(), и renderDoneTasks() 
+//TODO: Сделай удаление задач, а не classList.add('none')! 
 function renderAllTasks() {
    if (localStorage.getItem('tasks')) {
       tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -59,6 +62,7 @@ function renderAllTasks() {
       taskForm.classList.remove('none');
       tasks.forEach(task => renderTask(task));
    }
+   checkEmptyList();
 }
 function renderActiveTasks() {
    if (localStorage.getItem('tasks')) {
@@ -67,6 +71,7 @@ function renderActiveTasks() {
       taskForm.classList.remove('none');
       tasks.filter(item => !item.done).forEach(task => renderTask(task));
    }
+   checkEmptyList();
 }
 function renderDoneTasks() {
    if (localStorage.getItem('tasks')) {
@@ -75,6 +80,7 @@ function renderDoneTasks() {
       taskForm.classList.add('none');
       tasks.filter(item => item.done).forEach(task => renderTask(task));
    }
+   checkEmptyList();
 }
 function addTask(event) {
    event.preventDefault();
@@ -87,6 +93,7 @@ function addTask(event) {
       important: false,
    };
    tasks.push(newTask);
+   checkEmptyList();
    saveToLocalStorage();
    renderTask(newTask);
 
@@ -98,6 +105,7 @@ function deleteTask(event) {
    const parentNode = event.target.closest('.task__item');
    const idParentNode = Number(parentNode.id);
    tasks = tasks.filter(task => task.id !== idParentNode);
+   checkEmptyList();
    saveToLocalStorage();
    parentNode.remove();
 }
@@ -111,7 +119,6 @@ function doneTask(event) {
    saveToLocalStorage();
    textTask.classList.toggle('task__text--done');
    parentNode.querySelector('.task__marked-icon').classList.toggle('task__text--done');
-   console.log(event);
 }
 function toggleMarked(event) {
    if (event.target.dataset.action !== 'marked' && event.target.dataset.action !== 'unmarked') return;
@@ -144,4 +151,14 @@ function renderTask(task) {
                      <button class="task__delete" data-action="delete" href="#"><img src="./img/icons/delete.svg" alt="Delete icon"></button>
                   </li>`;
    taskList.insertAdjacentHTML('beforeend', taskHTML);
+}
+function checkEmptyList() {
+   const emptyListHTML = `<div class="empty-list__item"><span>Список задач пуст!</span></div>`;
+   if (tasks.length === 0) {
+      taskList.insertAdjacentHTML('afterbegin', emptyListHTML);
+   }
+   if (tasks.length > 0) {
+      const emptyElement = document.querySelector('.empty-list__item');
+      emptyElement ? emptyElement.remove() : null;
+   }
 }
