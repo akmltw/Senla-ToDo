@@ -28,18 +28,19 @@ body {
 .header {
    min-height: 84px;
    margin-bottom: 11px;
+   padding: 20px 15px 20px 0px;
 }
 .header__container {
    display: flex;
    align-items: center;
-   padding: 20px 15px;
+   padding-left: 0;
 }
 .header__logo {
    margin-right: 20px;
 }
 .header__search {
    display: flex;
-   flex: 0 1 582px;
+   max-width: 582px;
    align-items: center;
    position: relative;
    height: 40px;
@@ -76,7 +77,7 @@ body {
 }
 .menu__list {
    display: flex;
-   flex: 0 0 750px;
+   max-width: 750px;
 }
 
 /*-------------------------------------------------------------------------*/
@@ -127,13 +128,16 @@ a.list__link{
 
 /*------------------------------Form-Add-Task------------------------------*/
 .form__task {
+   display: flex;
+   flex-direction: column;
    margin-bottom: 23px;
+   max-width: 763px;
 }
 .form__title {
    font-size: 12px;
 }
 .form__textarea {
-   width: 759px;
+   /* width: 759px; */
    height: 90px;
    border-radius: 4px;
    border: 1px solid #DDDBDA;
@@ -174,18 +178,16 @@ a.list__link{
    align-items: baseline;
    position: relative;
    padding: 11px 12px 13px 23px;
-   width: 763px;
    height: 109px;
    background-color: white;
    border-radius: 4px;
    overflow: hidden;
-   margin-bottom: 17px;
    cursor: pointer;
    box-shadow: 0px 3px 10px 0px rgba(98, 100, 103, 0.211);
    transition: all 0.3s ease 0s;
 }
-.task__item:last-child{
-   margin-bottom: 0;
+.task__item:not(:last-child){
+   margin-bottom: 17px;
 }
 .task__item:hover{
    box-shadow: 0px 6px 20px 0px rgba(47, 128, 237, 0.75);   
@@ -216,7 +218,7 @@ span.task__text {
 }
 
 .list__task {
-   width: 763px;
+   max-width: 763px;
 }
 .task__marked {
    visibility: hidden;
@@ -303,6 +305,6 @@ span.task__text {
 .none {
    display: none;
 }
-.hidden{
+.hidden {
    visibility: hidden;
 }
