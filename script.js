@@ -13,6 +13,8 @@ if (localStorage.getItem('tasks')) {
    tasks.forEach(task => renderTask(task));
    checkEmptyList();
 }
+else
+   checkEmptyList();
 
 searchInput.addEventListener('input', searchTask);
 listStatus.addEventListener('click', filterStatus);
@@ -21,7 +23,6 @@ taskList.addEventListener('click', deleteTask);
 taskList.addEventListener('click', doneTask);
 taskList.addEventListener('click', toggleMarked);
 
-//TODO: Сделай удаление задач, а не classList.add('none')!
 function searchTask(event) {
    if (!event.target.closest('.header__input')) return;
    const searchText = event.target.value.toLowerCase();
@@ -31,7 +32,7 @@ function searchTask(event) {
       taskText.includes(searchText) ? item.classList.remove('none') : item.classList.add('none');
    });
 }
-//TODO: Что лучше: switch или if?
+
 function filterStatus(event) {
    if (!event.target.closest('.list__item')) return;
    const listStatusItemAll = listStatus.querySelectorAll('.list__item');
@@ -53,8 +54,7 @@ function filterStatus(event) {
          break;
    }
 }
-//TODO: Сделай рефакторинг renderAllTasks(), renderActiveTasks(), и renderDoneTasks() 
-//TODO: Сделай удаление задач, а не classList.add('none')! 
+
 function renderAllTasks() {
    if (localStorage.getItem('tasks')) {
       tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -62,8 +62,12 @@ function renderAllTasks() {
       taskForm.classList.remove('none');
       tasks.forEach(task => renderTask(task));
    }
+   else {
+     taskForm.classList.remove('none');
+   }
    checkEmptyList();
 }
+
 function renderActiveTasks() {
    if (localStorage.getItem('tasks')) {
       tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -71,8 +75,12 @@ function renderActiveTasks() {
       taskForm.classList.remove('none');
       tasks.filter(item => !item.done).forEach(task => renderTask(task));
    }
+   else {
+     taskForm.classList.remove('none');
+   }
    checkEmptyList();
 }
+
 function renderDoneTasks() {
    if (localStorage.getItem('tasks')) {
       tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -80,8 +88,21 @@ function renderDoneTasks() {
       taskForm.classList.add('none');
       tasks.filter(item => item.done).forEach(task => renderTask(task));
    }
+   else {
+     taskForm.classList.add('none');
+   }
    checkEmptyList();
 }
+
+taskTextArea.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' && !event.ctrlKey) {
+        if (taskTextArea.value.trim() !== '') {
+            event.preventDefault();
+            addTask(event);
+        }
+    }
+});
+
 function addTask(event) {
    event.preventDefault();
    let taskText = taskTextArea.value;
@@ -100,6 +121,7 @@ function addTask(event) {
    taskTextArea.value = "";
    taskTextArea.focus();
 }
+
 function deleteTask(event) {
    if (event.target.dataset.action !== 'delete') return;
    const parentNode = event.target.closest('.task__item');
@@ -109,6 +131,7 @@ function deleteTask(event) {
    saveToLocalStorage();
    parentNode.remove();
 }
+
 function doneTask(event) {
    if (!event.target.matches('.task__item')) return;
    const parentNode = event.target.closest('.task__item');
@@ -120,6 +143,7 @@ function doneTask(event) {
    textTask.classList.toggle('task__text--done');
    parentNode.querySelector('.task__marked-icon').classList.toggle('task__text--done');
 }
+
 function toggleMarked(event) {
    if (event.target.dataset.action !== 'marked' && event.target.dataset.action !== 'unmarked') return;
    const parentNode = event.target.closest('.task__item');
@@ -133,10 +157,11 @@ function toggleMarked(event) {
    buttonUnmarked.classList.toggle('none');
    parentNode.querySelector('.task__marked-icon').classList.toggle('hidden');
 }
+
 function saveToLocalStorage() {
    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
-//TODO: Сделать рефакторинг $cssClassVisibilityMarked и $cssClassVisibilityUnmarked
+
 function renderTask(task) {
    const cssClassDoneStatus = task.done ? "task__text task__text--done" : "task__text";
    const cssClassDoneStatusImg = task.done ? "task__text--done" : "";
@@ -152,6 +177,7 @@ function renderTask(task) {
                   </li>`;
    taskList.insertAdjacentHTML('beforeend', taskHTML);
 }
+
 function checkEmptyList() {
    const emptyListHTML = `<div class="empty-list__item"><span>Список задач пуст!</span></div>`;
    if (tasks.length === 0) {

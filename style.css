@@ -28,19 +28,18 @@ body {
 .header {
    min-height: 84px;
    margin-bottom: 11px;
-   padding: 20px 15px 20px 0px;
+   padding: 20px;
 }
 .header__container {
    display: flex;
    align-items: center;
-   padding-left: 0;
 }
 .header__logo {
    margin-right: 20px;
 }
 .header__search {
    display: flex;
-   max-width: 582px;
+   width: 565px;
    align-items: center;
    position: relative;
    height: 40px;
@@ -61,22 +60,18 @@ body {
    left: 15px;
 }
 .header__input {
-   width: 582px;
    background: inherit;
    color: #000;
    font-weight: 500;
    padding-left: 25px;
-   /* opacity: 0.8; */
 }
 
 /*-------------------------------------------------------------------------*/
 /*---------------------------------PAGE------------------------------------*/
 .page {
-   flex: 1 1 auto;
-   margin-bottom: 200px;
+  padding: 20px;
 }
 .menu__list {
-   display: flex;
    max-width: 750px;
 }
 
@@ -84,11 +79,13 @@ body {
 /*------------------------------List-Filter---------------------------------*/
 .list {
    position: relative;
+   margin-bottom: 25px;
 }
 .list::before{
    content: '';
    position: absolute;
-   width: 759px;
+   margin-right: 5px;
+   width: 762px;
    height: 1px;
    background-color: #E2E2E2;
 }
@@ -107,22 +104,28 @@ body {
    font-weight: 900;
    opacity: none;
 }
-.list__item_active:before {
+.list__item:before {
    content: '';
    position: absolute;
    top: 0;
    width: 175px;
    height: 4px;
    background-color: #2F80ED;
+   transform: scaleX(0);
+   transform-origin: left;
+   transition: transform 0.3s ease;
+}
+.list__item_active:before {
+   transform: scaleX(1);
 }
 
 a.list__link{
    color: inherit;
    opacity: 0.3;
    pointer-events: none;
+   transition: opacity 0.5s ease;
 }
 .list__item_active>.list__link{
-   transition: all 0.3s ease 0s;
    opacity: 1;
 }
 
@@ -137,7 +140,6 @@ a.list__link{
    font-size: 12px;
 }
 .form__textarea {
-   /* width: 759px; */
    height: 90px;
    border-radius: 4px;
    border: 1px solid #DDDBDA;
@@ -172,13 +174,12 @@ a.list__link{
 
 /*-------------------------------------------------------------------------*/
 /*-----------------------------List-Tasks----------------------------------*/
-/* TODO: поправить padding */
 .task__item {
    display: flex;
-   align-items: baseline;
+   align-items: center;
    position: relative;
-   padding: 11px 12px 13px 23px;
-   height: 109px;
+   padding: 20px;
+   min-height: 109px;
    background-color: white;
    border-radius: 4px;
    overflow: hidden;
@@ -198,11 +199,9 @@ a.list__link{
 .task__item:hover .task__unmarked{
    visibility: visible;
 }
-
 .task__marked-icon {
-   margin: 14px 10px 0px 0px;
+   margin: 0px 15px 15px 0px;
 }
-
 
 .task__text {
    flex: 0 1 423px;
@@ -219,6 +218,8 @@ span.task__text {
 
 .list__task {
    max-width: 763px;
+   min-height: 450px;
+   margin-bottom: 50px;
 }
 .task__marked {
    visibility: hidden;
@@ -268,16 +269,16 @@ span.task__text {
 .task__unmarked:active {
    box-shadow: 0px 0px 0px 0px;
 }
-.task__delete{
+.task__delete {
    top: 10px;
-   width: 40px; 
-   height: 40px; 
+   min-width: 40px; 
+   min-height: 40px; 
    margin-right: 12px;
    background-color: rgba(196, 196, 196, 0.50);
    border-radius: 20px;
    transition: all 0.3s ease 0s;
 }
-.task__delete img{
+.task__delete img {
    pointer-events: none;
    vertical-align: middle;
 }
@@ -285,14 +286,13 @@ span.task__text {
    background-color: #bfbcbc;
 }
 
-/* TODO: поправить padding */
 .empty-list__item {
    display: flex;
    align-items: center;
    justify-content: center;
-   width: 763px;
+   max-width: 763px;
    height: 150px;
-   padding: 11px 12px 13px 23px;
+   padding: 20px;
    font-size: 18px;
    font-weight: 500;
    background-color: rgba(231, 231, 231, 0.845);
@@ -307,4 +307,147 @@ span.task__text {
 }
 .hidden {
    visibility: hidden;
+}
+
+/*-------------------------------------------------------------------------*/
+/*----------------------------Media-queries--------------------------------*/
+@media (max-width: 832px) {
+  body {
+    background-position: 230px 218px;
+  }
+  .list::before {
+    width: 625px;
+  }
+  .header__search {
+    width: 435px;
+  }
+  .form__task {
+    max-width: 630px;
+  }
+  .empty-list__item {
+    max-width: 630px;
+  }
+  .list__task {
+    max-width: 630px;
+  }
+  .task__delete {
+    width: 60px;
+    height: 45px;
+    border-radius: 35px;
+  }
+}
+
+@media (max-width: 695px) {
+  body {
+    background-position: 130px 218px;
+  }
+  .list::before {
+    width: 500px;
+  }
+  .list__item_active:before {
+    width: 175px;
+  }
+  .header__search {
+    width: 310px;
+  }
+  .form__task {
+    max-width: 500px;
+  }
+  .form__title {
+    font-size: 14px;
+  }
+  .empty-list__item {
+    max-width: 500px;
+  }
+  .list__task {
+    max-width: 500px;
+  }
+  .task__marked {
+    font-size: 13px;
+  }
+  .task__unmarked {
+    font-size: 13px;
+  }
+  .task__delete {
+    width: 80px;
+    height: 45px;
+    border-radius: 40px;
+  }
+}
+
+@media (max-width: 552px) {
+  body {
+    background-size: contain;
+    background-position: 10px 218px;
+  }
+  .header {
+    margin: 0px;
+  }
+  .list::before {
+    width: 450px;
+  }
+  .list__status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .list__item {
+   color: #373a3d;
+  }
+  .list__item_active {
+    width: 550px;
+    background-color: #95baeb;
+    transition: all 0.3s ease 0s;
+  }
+  .list__item_active:before {
+    display: none;
+  }
+  .header__search {
+    width: 270px;
+  }
+  .form__button {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .form__title {
+    font-size: 15px;
+  }
+  .form__button {
+    font-size: 15px;
+  }
+  .task__marked {
+    font-size: 11px;
+  }
+  .task__unmarked {
+    font-size: 11px;
+  }
+  .task__delete {
+    width: 90px;
+    height: 45px;
+    border-radius: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__container {
+    flex-direction: column;
+  }
+  .header__logo {
+    margin: 0px 0px 10px 0px;  
+  }
+  .header__search {
+    width: 100%;
+  }
+  .list::before {
+    width: 380px;
+  }
+  .task__marked {
+    padding: 5px;
+    font-size: 11px;
+  }
+  .task__unmarked{
+    padding: 5px;
+    font-size: 11px;
+  }
 }
