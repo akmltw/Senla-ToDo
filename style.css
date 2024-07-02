@@ -10,6 +10,7 @@ body {
    font-weight: 400;
    color: #53565A;
    background: url('./img/background-image.svg') 600px 218px no-repeat;
+   scrollbar-gutter: stable both-edges;
 }
 .wrapper {
    display: flex;
@@ -72,7 +73,7 @@ body {
   padding: 20px;
 }
 .menu__list {
-   max-width: 750px;
+  max-width: 763px;
 }
 
 /*-------------------------------------------------------------------------*/
@@ -85,7 +86,7 @@ body {
    content: '';
    position: absolute;
    margin-right: 5px;
-   width: 762px;
+   width: 763px;
    height: 1px;
    background-color: #E2E2E2;
 }
@@ -218,7 +219,6 @@ span.task__text {
 
 .list__task {
    max-width: 763px;
-   min-height: 450px;
    margin-bottom: 50px;
 }
 .task__marked {
@@ -398,7 +398,7 @@ span.task__text {
   .list__item_active {
     width: 550px;
     background-color: #95baeb;
-    transition: all 0.3s ease 0s;
+    transition: all 0.5s ease 0s;
   }
   .list__item_active:before {
     display: none;

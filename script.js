@@ -62,9 +62,6 @@ function renderAllTasks() {
       taskForm.classList.remove('none');
       tasks.forEach(task => renderTask(task));
    }
-   else {
-     taskForm.classList.remove('none');
-   }
    checkEmptyList();
 }
 
@@ -75,9 +72,6 @@ function renderActiveTasks() {
       taskForm.classList.remove('none');
       tasks.filter(item => !item.done).forEach(task => renderTask(task));
    }
-   else {
-     taskForm.classList.remove('none');
-   }
    checkEmptyList();
 }
 
@@ -87,9 +81,6 @@ function renderDoneTasks() {
       taskList.innerHTML = "";
       taskForm.classList.add('none');
       tasks.filter(item => item.done).forEach(task => renderTask(task));
-   }
-   else {
-     taskForm.classList.add('none');
    }
    checkEmptyList();
 }
