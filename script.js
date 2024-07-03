@@ -22,6 +22,7 @@ taskForm.addEventListener('submit', addTask);
 taskList.addEventListener('click', deleteTask);
 taskList.addEventListener('click', doneTask);
 taskList.addEventListener('click', toggleMarked);
+taskTextArea.addEventListener('keydown', checkEnterDown);
 
 function searchTask(event) {
    if (!event.target.closest('.header__input')) return;
@@ -85,17 +86,17 @@ function renderDoneTasks() {
    checkEmptyList();
 }
 
-taskTextArea.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter' && !event.ctrlKey) {
-        if (taskTextArea.value.trim() !== '') {
-            event.preventDefault();
-            addTask(event);
-        }
-    }
-});
+function checkEnterDown(event) {
+   if (event.key === 'Enter') {
+      addTask(event); 
+   }
+}
 
 function addTask(event) {
    event.preventDefault();
+   if (taskTextArea.value.trim() === '') {
+      return;
+   }
    let taskText = taskTextArea.value;
 
    const newTask = {

@@ -206,7 +206,7 @@ a.list__link{
 
 .task__text {
    flex: 0 1 423px;
-   flex-wrap: wrap;
+   word-break: break-word;
    padding-right: 10px;
 }
 span.task__text {
